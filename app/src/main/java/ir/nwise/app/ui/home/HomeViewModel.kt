@@ -11,6 +11,7 @@ class HomeViewModel(private val getAllPostUseCase: GetAllPostUseCase) :
     fun getAllPost() {
         getAllPostUseCase.execute {
             when (this) {
+                is UseCaseResult.Loading -> liveData.postValue(HomeViewState.Loading)
                 is UseCaseResult.Success -> liveData.postValue(HomeViewState.Loaded(this.data))
                 is UseCaseResult.Error -> liveData.postValue(HomeViewState.Error(this.exception))
             }

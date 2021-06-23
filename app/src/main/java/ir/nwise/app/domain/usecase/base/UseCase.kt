@@ -19,6 +19,7 @@ abstract class UseCase<Param : Any?, Response>(
     protected abstract suspend fun executeOnBackground(param: Param?): Response
 
     fun execute(param: Param? = null, block: CompletionBlock<Response>) {
+        block(UseCaseResult.Loading)
         unsubscribe()
         coroutineScope.launch(dispatchers.job() + dispatchers.main()) {
             try {
@@ -45,6 +46,7 @@ abstract class UseCase<Param : Any?, Response>(
 }
 
 sealed class UseCaseResult<out T> {
+    object Loading : UseCaseResult<Nothing>()
     class Success<out T>(val data: T) : UseCaseResult<T>()
     class Error(val exception: Throwable) : UseCaseResult<Nothing>()
 }

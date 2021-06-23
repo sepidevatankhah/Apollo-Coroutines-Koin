@@ -2,12 +2,15 @@ package ir.nwise.app.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.nwise.app.R
+import ir.nwise.app.common.NetworkManager.isOnline
 import ir.nwise.app.databinding.FragmentHomeBinding
 import ir.nwise.app.ui.base.BaseFragment
+import ir.nwise.app.ui.utils.hide
+import ir.nwise.app.ui.utils.show
+import ir.nwise.app.ui.utils.toastNoInternetConnection
 import ir.nwise.app.ui.utils.toastOopsError
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -17,7 +20,6 @@ class HomeFragment : BaseFragment<HomeViewState, HomeViewModel, FragmentHomeBind
     private val userPostAdapter: UserPostAdapter =
         UserPostAdapter(
             onItemClicked = { model ->
-                Toast.makeText(context, model.title, Toast.LENGTH_SHORT).show()
                 binding.root.findNavController().navigate(
                     HomeFragmentDirections.openDetail(model)
                 )
@@ -30,7 +32,7 @@ class HomeFragment : BaseFragment<HomeViewState, HomeViewModel, FragmentHomeBind
         setHasOptionsMenu(true)
         binding.lifecycleOwner = this@HomeFragment
         setupSwipeRefreshLayout()
-        viewModel.getAllPost()
+        getAllPost()
         initRecyclerView()
     }
 
@@ -41,15 +43,21 @@ class HomeFragment : BaseFragment<HomeViewState, HomeViewModel, FragmentHomeBind
 
     override fun render(state: HomeViewState) {
         binding.swipeRefresh.isRefreshing = false
+        binding.spinner.hide()
         when (state) {
             is HomeViewState.Loading -> {
-                //TODO: Add custom spinner
+                binding.spinner.show()
+                binding.recyclerView.hide()
             }
             is HomeViewState.Loaded -> {
+                binding.spinner.hide()
+                binding.recyclerView.show()
                 userPostAdapter.submitItems(state.albums)
                 userPostAdapter.notifyDataSetChanged()
             }
             is HomeViewState.Error -> {
+                binding.swipeRefresh.isRefreshing = false
+                binding.spinner.hide()
                 Log.e(
                     "HomeFragment",
                     state.throwable.message,
@@ -71,7 +79,18 @@ class HomeFragment : BaseFragment<HomeViewState, HomeViewModel, FragmentHomeBind
     private fun setupSwipeRefreshLayout() {
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = true
-            viewModel.getAllPost()
+            getAllPost()
+        }
+    }
+
+    private fun getAllPost() {
+        context?.let {
+            if (isOnline(it))
+                viewModel.getAllPost()
+            else {
+                view?.toastNoInternetConnection()
+                binding.swipeRefresh.isRefreshing = false
+            }
         }
     }
 }
