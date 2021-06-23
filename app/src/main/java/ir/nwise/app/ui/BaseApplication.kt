@@ -2,7 +2,7 @@ package ir.nwise.app.ui
 
 import android.app.Application
 import ir.nwise.app.di.domainModule
-import ir.nwise.app.di.networkModule
+import ir.nwise.app.di.graphQlModule
 import ir.nwise.app.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -18,7 +18,7 @@ class BaseApplication : Application() {
             androidContext(this@BaseApplication)
             modules(
                 listOf(
-                    networkModule,
+                    graphQlModule,
                     domainModule,
                     uiModule
                 )
