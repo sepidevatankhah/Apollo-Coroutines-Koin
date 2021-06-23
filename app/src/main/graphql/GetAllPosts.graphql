@@ -1,0 +1,23 @@
+query getAllPosts(
+  $options: PageQueryOptions
+) {
+  posts(options: $options) {
+
+    data {
+      user{
+        id
+        name
+        username
+        email
+        phone
+      }
+      id
+      title
+      body
+    }
+    meta {
+      totalCount
+    }
+  }
+}
+
