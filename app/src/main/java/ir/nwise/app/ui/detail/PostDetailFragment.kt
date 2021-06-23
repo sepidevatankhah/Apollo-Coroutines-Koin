@@ -34,6 +34,10 @@ class PostDetailFragment : Fragment() {
             with(binding) {
                 postDetailTitle.text = title
                 postDetailBody.text = body
+                user?.let {
+                    userNameText.text = it.username
+                    nameText.text = it.name
+                }
             }
         }
     }
