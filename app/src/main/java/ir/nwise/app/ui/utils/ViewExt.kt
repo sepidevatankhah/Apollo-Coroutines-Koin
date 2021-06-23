@@ -21,7 +21,6 @@ fun View.show() {
     visibility = View.VISIBLE
 }
 
-
 fun View.toastNoInternetConnection() {
     Toast.makeText(
         context,
