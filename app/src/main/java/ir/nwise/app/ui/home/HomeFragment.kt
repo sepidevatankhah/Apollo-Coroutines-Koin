@@ -46,8 +46,10 @@ class HomeFragment : BaseFragment<HomeViewState, HomeViewModel, FragmentHomeBind
         binding.spinner.hide()
         when (state) {
             is HomeViewState.Loading -> {
-                binding.spinner.show()
-                binding.recyclerView.hide()
+                if (userPostAdapter.itemCount == 0) {
+                    binding.spinner.show()
+                    binding.recyclerView.hide()
+                }
             }
             is HomeViewState.Loaded -> {
                 binding.spinner.hide()
