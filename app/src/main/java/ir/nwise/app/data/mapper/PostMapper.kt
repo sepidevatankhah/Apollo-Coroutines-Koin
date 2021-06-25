@@ -17,7 +17,5 @@ fun mapUser(user: GetAllPostsQuery.User) =
     UserResponse(
         id = user.id,
         name = user.name,
-        username = user.username,
-        phone = user.phone,
-        email = user.email
+        username = user.username
     )

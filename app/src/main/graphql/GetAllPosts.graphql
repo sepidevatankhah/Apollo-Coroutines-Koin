@@ -8,8 +8,6 @@ query getAllPosts(
         id
         name
         username
-        email
-        phone
       }
       id
       title

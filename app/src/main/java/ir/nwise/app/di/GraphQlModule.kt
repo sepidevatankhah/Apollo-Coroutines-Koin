@@ -17,7 +17,7 @@ val graphQlModule = module {
             .serverUrl(Config.BASE_URL)
             .okHttpClient(okHttpClient)
             .enableAutoPersistedQueries(true)
-            .useHttpGetMethodForQueries(false)
+            .useHttpGetMethodForQueries(true)
             .useHttpGetMethodForPersistedQueries(true)
 
         apolloBuilder.build()

@@ -15,8 +15,6 @@ data class PostResponse(
 data class UserResponse(
     val id: String?,
     val name: String?= null,
-    val username: String?= null,
-    val phone: String? = null,
-    val email: String? = null
+    val username: String?= null
 ) : Parcelable
 
