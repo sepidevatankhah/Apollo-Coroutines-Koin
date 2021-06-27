@@ -17,6 +17,11 @@ class HomeViewModel(private val getAllPostUseCase: GetAllPostUseCase) :
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        getAllPostUseCase.unsubscribe()
+    }
 }
 
 sealed class HomeViewState {

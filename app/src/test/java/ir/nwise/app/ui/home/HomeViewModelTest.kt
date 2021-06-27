@@ -8,6 +8,7 @@ import ir.nwise.app.domain.models.PostResponse
 import ir.nwise.app.domain.models.UserResponse
 import ir.nwise.app.domain.usecase.GetAllPostUseCase
 import ir.nwise.app.utils.CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
@@ -22,6 +23,7 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.HttpException
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest {
     private val testCoroutineDispatcher = TestCoroutineDispatcher()

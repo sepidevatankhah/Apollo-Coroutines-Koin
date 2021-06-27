@@ -6,19 +6,23 @@ import ir.nwise.app.common.Config
 import ir.nwise.app.data.repository.AppRepository
 import ir.nwise.app.data.repository.AppRepositoryImp
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+
 
 val graphQlModule = module {
     single {
-        val okHttpClient =
-            OkHttpClient.Builder()
-                .build()
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
         val apolloBuilder = ApolloClient.builder()
             .serverUrl(Config.BASE_URL)
             .okHttpClient(okHttpClient)
-            .enableAutoPersistedQueries(true)
-            .useHttpGetMethodForQueries(true)
-            .useHttpGetMethodForPersistedQueries(true)
 
         apolloBuilder.build()
     }
