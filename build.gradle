@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "com.android.tools.build:gradle:4.1.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
         classpath "com.apollographql.apollo:apollo-gradle-plugin:$apollo_version"
@@ -28,7 +28,7 @@ allprojects {
         testRules_version = '1.3.0'
         mockWebserver_version = '5.0.0-alpha.2'
     }
-    
+
     repositories {
         google()
         mavenCentral()
